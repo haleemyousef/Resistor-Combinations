@@ -17,4 +17,4 @@ class main:
     
     
   def special_cases(self):
-    
+    pass
