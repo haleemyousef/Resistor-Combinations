@@ -10,7 +10,7 @@ class main:
     self.resultant_configs = []
     
   def exact_match(self):
-    if input is in self.available_resistors:
+    if input in self.available_resistors:
       return True
   
   def calc_comb(self):
