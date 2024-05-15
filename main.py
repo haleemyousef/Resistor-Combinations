@@ -23,4 +23,16 @@ while x < n:
     x += 1
 
 
+x = k1
+k12 = k1 + k2
+while x < k12:
+    y = 0
+    while y < k1:
+        series = calculated_combinations[x] + calculated_combinations[y]
+        calculated_combinations.append(series)
+        parallel = (calculated_combinations[x] * calculated_combinations[y]) / series
+        calculated_combinations.append(parallel)
+        y += 1
+    x += 1
+
 print(calculated_combinations)
