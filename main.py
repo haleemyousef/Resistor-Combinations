@@ -11,6 +11,7 @@ k3 = 2*n^3 + 2*n^2
 calculated_combinations += resistor_inventory
 x = 0 # array index
 
+
 while x < n:
     y = x
     while y < n:
@@ -20,7 +21,6 @@ while x < n:
         calculated_combinations.append(parallel)
         y += 1
     x += 1
-
 
 
 print(calculated_combinations)
