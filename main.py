@@ -1,5 +1,7 @@
-resistor_inventory = [1000, 2000, 5000, 10000, 50000]
+resistor_inventory = [1000, 2000]
+combination_symbols = ["1k", "2k"]
 calculated_combinations = []
+calculated_combinations = resistor_inventory
 
 n = len(resistor_inventory)
 k1 = n
@@ -8,8 +10,10 @@ k3 = 2 * n**3 + 2 * n**2
 # k4_1 = 4*n^4 + 4*n^3
 # k4_2 = n^4 + 2*n^3 + 2*n^2 + n
 
-calculated_combinations += resistor_inventory
-x = 0 # array index
+def generate_hash(x, y, is_parallel=None):
+    is_parallel = False if is_parallel is None else True
+    combination_symbols.append(f"({combination_symbols[y]}{"--" if is_parallel is False else "||"}{combination_symbols[x]})")
+        
 
 def compute_and_push(x_limiter, y_limiter, x, y_value=None):
     set_y_to_x_flag = True if y_value is None else False
@@ -18,13 +22,18 @@ def compute_and_push(x_limiter, y_limiter, x, y_value=None):
         while y < y_limiter:
             series = calculated_combinations[x] + calculated_combinations[y]
             calculated_combinations.append(series)
+            generate_hash(x, y)
             parallel = (calculated_combinations[x] * calculated_combinations[y]) / series
             calculated_combinations.append(parallel)
+            generate_hash(x, y, True)
             y += 1
         x += 1
 
-compute_and_push(k1, k1, 0)
-compute_and_push(k1+k2, k1, k1, 0)
 
-print(calculated_combinations)
-print(len(calculated_combinations), k1+k2+k3)
+if __name__ == "__main__":
+    compute_and_push(k1, k1, 0)
+    compute_and_push(k1+k2, k1, k1, 0)
+
+    for i, comb in enumerate(calculated_combinations):
+        print(combination_symbols[i], comb)
+    print(len(calculated_combinations),len(combination_symbols), k1+k2+k3)
