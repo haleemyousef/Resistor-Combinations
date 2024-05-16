@@ -1,5 +1,5 @@
 resistor_inventory = [1000, 2000]
-combination_symbols = ["1k", "2k"]
+combination_symbols = []
 calculated_combinations = []
 calculated_combinations = resistor_inventory
 
@@ -9,6 +9,15 @@ k2 = n**2 + n
 k3 = 2 * n**3 + 2 * n**2
 # k4_1 = 4*n^4 + 4*n^3
 # k4_2 = n^4 + 2*n^3 + 2*n^2 + n
+
+def generate_initial_hash(resistor, symbol=None):
+    if resistor < 1000:
+        symbol = str(resistor)
+    elif resistor < 1000000:
+        symbol = str(resistor/1000)+"k"
+    else:
+        symbol = str(resistor/1000000)+"M"
+    return symbol
 
 def generate_hash(x, y, is_parallel=None):
     is_parallel = False if is_parallel is None else True
@@ -31,6 +40,7 @@ def compute_and_push(x_limiter, y_limiter, x, y_value=None):
 
 
 if __name__ == "__main__":
+    combination_symbols = list(map(generate_initial_hash, calculated_combinations))
     compute_and_push(k1, k1, 0)
     compute_and_push(k1+k2, k1, k1, 0)
 
