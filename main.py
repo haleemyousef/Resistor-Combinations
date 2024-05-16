@@ -1,7 +1,10 @@
-resistor_inventory = [1000, 2000]
+import json
+
+resistor_inventory = [500, 1000, 2000, 50000, 220000, 1500000]
 combination_symbols = []
 calculated_combinations = []
 calculated_combinations = resistor_inventory
+data = {}
 
 n = len(resistor_inventory)
 k1 = n
@@ -21,8 +24,7 @@ def generate_initial_hash(resistor, symbol=None):
 
 def generate_hash(x, y, is_parallel=None):
     is_parallel = False if is_parallel is None else True
-    combination_symbols.append(f"({combination_symbols[y]}{"--" if is_parallel is False else "||"}{combination_symbols[x]})")
-        
+    combination_symbols.append(f"({combination_symbols[y]}{"--" if is_parallel is False else "||"}{combination_symbols[x]})")      
 
 def compute_and_push(x_limiter, y_limiter, x, y_value=None):
     set_y_to_x_flag = True if y_value is None else False
@@ -41,9 +43,20 @@ def compute_and_push(x_limiter, y_limiter, x, y_value=None):
 
 if __name__ == "__main__":
     combination_symbols = list(map(generate_initial_hash, calculated_combinations))
-    compute_and_push(k1, k1, 0)
-    compute_and_push(k1+k2, k1, k1, 0)
+    compute_and_push(k1, k1, 0) # k=2 i.e. maximum of 2 resistors per combination
+    compute_and_push(k1+k2, k1, k1, 0) # k=3
 
-    for i, comb in enumerate(calculated_combinations):
-        print(combination_symbols[i], comb)
+    for key, value in zip(calculated_combinations, combination_symbols):
+        if key in data:
+            # If the key already exists, append the value to its array
+            data[key].append(value)
+        else:
+            # If the key doesn't exist, create a new array with the value
+            data[key] = [value]
+    with open("output.json", "w") as json_file:
+        json.dump(data, json_file, indent=4)
+
+
+    # for i, comb in enumerate(calculated_combinations):
+    #     print(combination_symbols[i], comb)
     print(len(calculated_combinations),len(combination_symbols), k1+k2+k3)
