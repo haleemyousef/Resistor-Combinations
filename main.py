@@ -43,19 +43,20 @@ def compute_and_push(x_limiter, y_limiter, x, y_value=None):
             y += 1
         x += 1
 
+def adjoin_lists_into_dict():
+    for key, value in zip(calculated_combinations, combination_symbols):
+        if key in data:
+            # If the key already exists, append the value to its array
+            data[key].append(value[1:-1])
+        else:
+            # If the key doesn't exist, create a new array with the value
+            data[key] = [value[1:-1]]
 
 if __name__ == "__main__":
     combination_symbols = list(map(generate_initial_hash, calculated_combinations))
     compute_and_push(k1, k1, 0) # k=2 i.e. maximum of 2 resistors per combination
     compute_and_push(k1+k2, k1, k1, 0) # k=3
-
-    for key, value in zip(calculated_combinations, combination_symbols):
-        if key in data:
-            # If the key already exists, append the value to its array
-            data[key].append(value)
-        else:
-            # If the key doesn't exist, create a new array with the value
-            data[key] = [value]
+    adjoin_lists_into_dict()
     sorted_data = {k: data[k] for k in sorted(data)}
     with open("output.json", "w") as json_file:
         json.dump(sorted_data, json_file, indent=4)
