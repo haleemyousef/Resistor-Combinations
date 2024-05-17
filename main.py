@@ -1,3 +1,4 @@
+import sys
 import json
 
 resistor_inventory = [100, 200, 500, 1000, 1500, 2200, 4700, 6800, 8200,
@@ -35,10 +36,10 @@ def compute_and_push(x_limiter, y_limiter, x, y_value=None):
         y = x if set_y_to_x_flag is True else y_value 
         while y < y_limiter:
             series = calculated_combinations[x] + calculated_combinations[y]
-            calculated_combinations.append(series)
+            calculated_combinations.append(round(series, 2))
             generate_hash(x, y)
             parallel = (calculated_combinations[x] * calculated_combinations[y]) / series
-            calculated_combinations.append(parallel)
+            calculated_combinations.append(round(parallel, 2))
             generate_hash(x, y, True)
             y += 1
         x += 1
@@ -53,15 +54,17 @@ def adjoin_lists_into_dict():
             data[key] = [value[1:-1]]
 
 if __name__ == "__main__":
+    file_name = sys.argv[1] if len(sys.argv) == 2 else "output"
+    print(file_name)
     combination_symbols = list(map(generate_initial_hash, calculated_combinations))
     compute_and_push(k1, k1, 0) # k=2 i.e. maximum of 2 resistors per combination
     compute_and_push(k1+k2, k1, k1, 0) # k=3
     adjoin_lists_into_dict()
     sorted_data = {k: data[k] for k in sorted(data)}
-    with open("output.json", "w") as json_file:
+    with open(f"{file_name}.json", "w") as json_file:
         json.dump(sorted_data, json_file, indent=4)
 
 
     # for i, comb in enumerate(calculated_combinations):
     #     print(combination_symbols[i], comb)
-    print(len(calculated_combinations),len(combination_symbols), k1+k2+k3, k1)
+    print(len(data), len(sorted_data), len(calculated_combinations),len(combination_symbols), k1+k2+k3, k1)
