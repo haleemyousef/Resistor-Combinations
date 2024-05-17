@@ -9,6 +9,7 @@ eg:
 the symbol "--" means in series with ...
 the symbol "||" means in parallel with ...
 
+GET STARTED by opening main.py and change the resistors in "resistor_inventory" array to the resistor values available to you!
 you can just as easily run it for capacitors if you want, just swap the "--" with a "||" and vice versa when you read the json file.
 
 Goal: an efficient C implementation that can calculate for all the E24 standard resistor values on my 8gb RAM laptop without starting a fire.
