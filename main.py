@@ -1,6 +1,9 @@
 import json
 
-resistor_inventory = [500, 1000, 2000, 50000, 220000, 1500000]
+resistor_inventory = [100, 200, 500, 1000, 1500, 2200, 4700, 6800, 8200,
+                       10000, 15000, 20000, 25000, 33000, 47000, 68000, 75000,
+                         100000, 150000, 200000, 270000, 470000, 820000,
+                           1000000, 2000000]
 combination_symbols = []
 calculated_combinations = []
 calculated_combinations = resistor_inventory
@@ -60,4 +63,4 @@ if __name__ == "__main__":
 
     # for i, comb in enumerate(calculated_combinations):
     #     print(combination_symbols[i], comb)
-    print(len(calculated_combinations),len(combination_symbols), k1+k2+k3)
+    print(len(calculated_combinations),len(combination_symbols), k1+k2+k3, k1)
