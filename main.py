@@ -24,7 +24,7 @@ def generate_initial_hash(resistor, symbol=None):
 
 def generate_hash(x, y, is_parallel=None):
     is_parallel = False if is_parallel is None else True
-    combination_symbols.append(f"({combination_symbols[y]}{"--" if is_parallel is False else "||"}{combination_symbols[x]})")      
+    combination_symbols.append(f"({combination_symbols[y]}{'--' if is_parallel is False else '||'}{combination_symbols[x]})")      
 
 def compute_and_push(x_limiter, y_limiter, x, y_value=None):
     set_y_to_x_flag = True if y_value is None else False
@@ -53,8 +53,9 @@ if __name__ == "__main__":
         else:
             # If the key doesn't exist, create a new array with the value
             data[key] = [value]
+    sorted_data = {k: data[k] for k in sorted(data)}
     with open("output.json", "w") as json_file:
-        json.dump(data, json_file, indent=4)
+        json.dump(sorted_data, json_file, indent=4)
 
 
     # for i, comb in enumerate(calculated_combinations):
